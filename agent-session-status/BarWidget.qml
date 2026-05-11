@@ -42,7 +42,7 @@ Item {
       contextMenu.close()
       PanelService.closeContextMenu(screen)
       if (action === "refresh") {
-        root.mainInstance?.refresh()
+        root.mainInstance?.refreshAndPrune()
       } else if (action === "restart") {
         root.mainInstance?.restartService()
       } else if (action === "settings" && pluginApi) {
@@ -94,7 +94,7 @@ Item {
       } else if (mouse.button === Qt.RightButton) {
         PanelService.showContextMenu(contextMenu, root, screen)
       } else if (mouse.button === Qt.MiddleButton) {
-        root.mainInstance?.refresh()
+        root.mainInstance?.refreshAndPrune()
       }
     }
 

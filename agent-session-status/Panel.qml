@@ -81,9 +81,9 @@ Item {
           }
 
           NIconButton {
-            icon: "refresh"
-            tooltipText: pluginApi?.tr("panel.refresh")
-            onClicked: root.mainInstance?.refresh()
+            icon: "reload"
+            tooltipText: pluginApi?.tr("panel.restart")
+            onClicked: root.mainInstance?.restartService()
           }
         }
       }
@@ -234,9 +234,9 @@ Item {
 
         NButton {
           Layout.fillWidth: true
-          text: pluginApi?.tr("panel.restart")
-          icon: "reload"
-          onClicked: root.mainInstance?.restartService()
+          text: pluginApi?.tr("panel.refresh")
+          icon: "refresh"
+          onClicked: root.mainInstance?.refreshAndPrune()
         }
 
         NIconButton {

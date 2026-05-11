@@ -27,7 +27,8 @@ Example client configuration:
 
 Allowed status values are `running`, `completed`, and `blocked`. Reusing the
 same `X-Agent` and `id` updates the existing in-memory session. There is no
-delete endpoint; session data is cleared when the plugin service restarts.
+MCP delete tool; manual refresh removes non-running sessions, and all session
+data is cleared when the plugin service restarts.
 
 This service implements the JSON-RPC POST side of MCP Streamable HTTP. It does
 not provide an SSE stream on `GET /mcp`.

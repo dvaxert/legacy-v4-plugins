@@ -60,6 +60,15 @@ class SessionStore:
     def snapshot(self):
         return self.snapshot_for_agent()
 
+    def prune_inactive(self):
+        before = len(self._sessions)
+        self._sessions = {
+            key: entry
+            for key, entry in self._sessions.items()
+            if entry["status"] == "running"
+        }
+        return before - len(self._sessions)
+
     def snapshot_for_agent(self, agent=None):
         grouped = {}
         running_count = 0
@@ -278,6 +287,16 @@ def handle_request(store, token, method, path, headers=None, raw_body=b""):
 
     if method == "GET" and parsed_path == "/sessions":
         return _json_response(200, store.snapshot())
+
+    if method == "POST" and parsed_path == "/sessions/prune-inactive":
+        if not _authorized(headers, token):
+            return _json_response(401, {"error": "unauthorized"})
+
+        removed = store.prune_inactive()
+        return _json_response(200, {
+            "removed": removed,
+            "snapshot": store.snapshot(),
+        })
 
     if method == "GET" and parsed_path == "/mcp":
         return _json_response(405, {"error": "SSE streaming is not supported"})

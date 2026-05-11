@@ -38,6 +38,19 @@ class SessionStoreTest(unittest.TestCase):
 
         self.assertEqual(self.store.snapshot()["runningCount"], 1)
 
+    def test_prune_inactive_removes_non_running_sessions(self):
+        self.store.upsert("codex", {"id": "a", "title": "A", "status": "running"})
+        self.store.upsert("codex", {"id": "b", "title": "B", "status": "blocked"})
+        self.store.upsert("claude", {"id": "c", "title": "C", "status": "completed"})
+
+        removed = self.store.prune_inactive()
+
+        self.assertEqual(removed, 2)
+        snapshot = self.store.snapshot()
+        self.assertEqual(snapshot["runningCount"], 1)
+        self.assertEqual(len(snapshot["agents"]), 1)
+        self.assertEqual(snapshot["agents"][0]["sessions"][0]["id"], "a")
+
 
 class McpRequestTest(unittest.TestCase):
     def setUp(self):
@@ -230,6 +243,41 @@ class McpRequestTest(unittest.TestCase):
 
         self.assertEqual(status, 405)
         self.assertIn("SSE", body["error"])
+
+    def test_prune_inactive_sessions_requires_authorization(self):
+        self.store.upsert("codex", {"id": "s1", "title": "Codex", "status": "completed"})
+
+        status, _, body = server.handle_request(
+            self.store,
+            "secret",
+            "POST",
+            "/sessions/prune-inactive",
+            {},
+            b"",
+        )
+
+        self.assertEqual(status, 401)
+        self.assertEqual(body["error"], "unauthorized")
+        self.assertEqual(self.store.snapshot()["agents"][0]["sessions"][0]["id"], "s1")
+
+    def test_prune_inactive_sessions_returns_updated_snapshot(self):
+        self.store.upsert("codex", {"id": "s1", "title": "Running", "status": "running"})
+        self.store.upsert("codex", {"id": "s2", "title": "Blocked", "status": "blocked"})
+        self.store.upsert("claude", {"id": "s3", "title": "Done", "status": "completed"})
+
+        status, _, body = server.handle_request(
+            self.store,
+            "secret",
+            "POST",
+            "/sessions/prune-inactive",
+            {"Authorization": "Bearer secret"},
+            b"",
+        )
+
+        self.assertEqual(status, 200)
+        self.assertEqual(body["removed"], 2)
+        self.assertEqual(body["snapshot"]["runningCount"], 1)
+        self.assertEqual([agent["agent"] for agent in body["snapshot"]["agents"]], ["codex"])
 
 
 if __name__ == "__main__":

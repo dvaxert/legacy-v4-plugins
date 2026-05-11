@@ -54,7 +54,7 @@ Item {
     target: "plugin:agent-session-status"
 
     function refresh() {
-      root.refresh()
+      root.refreshAndPrune()
     }
 
     function restart() {
@@ -141,6 +141,15 @@ Item {
     restartDelay.restart()
   }
 
+  function applySnapshot(payload) {
+    root.runningCount = Number(payload.runningCount ?? 0)
+    root.agents = payload.agents ?? []
+    root.lastUpdatedAt = Number(payload.updatedAt ?? 0)
+    root.serviceRunning = true
+    root.serviceStarting = false
+    root.serviceError = ""
+  }
+
   function refresh() {
     var xhr = new XMLHttpRequest()
     xhr.onreadystatechange = function() {
@@ -151,12 +160,7 @@ Item {
       }
       try {
         var payload = JSON.parse(xhr.responseText)
-        root.runningCount = Number(payload.runningCount ?? 0)
-        root.agents = payload.agents ?? []
-        root.lastUpdatedAt = Number(payload.updatedAt ?? 0)
-        root.serviceRunning = true
-        root.serviceStarting = false
-        root.serviceError = ""
+        root.applySnapshot(payload)
       } catch (e) {
         root.serviceError = pluginApi?.tr("service.badResponse")
       }
@@ -165,6 +169,29 @@ Item {
       root.serviceError = pluginApi?.tr("service.unreachable")
     }
     xhr.open("GET", root.serverUrl + "/sessions")
+    xhr.send()
+  }
+
+  function refreshAndPrune() {
+    var xhr = new XMLHttpRequest()
+    xhr.onreadystatechange = function() {
+      if (xhr.readyState !== XMLHttpRequest.DONE) return
+      if (xhr.status !== 200) {
+        root.serviceError = pluginApi?.tr("service.refreshFailed", { status: xhr.status })
+        return
+      }
+      try {
+        var payload = JSON.parse(xhr.responseText)
+        root.applySnapshot(payload.snapshot ?? payload)
+      } catch (e) {
+        root.serviceError = pluginApi?.tr("service.badResponse")
+      }
+    }
+    xhr.onerror = function() {
+      root.serviceError = pluginApi?.tr("service.unreachable")
+    }
+    xhr.open("POST", root.serverUrl + "/sessions/prune-inactive")
+    xhr.setRequestHeader("Authorization", "Bearer " + root.token)
     xhr.send()
   }
 }
