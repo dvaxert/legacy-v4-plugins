@@ -16,7 +16,7 @@ Screen Toolkit provides a single integrated panel for advanced screen interactio
 | ---------------------- | ----------------------------------------------------------------------------------- |
 | **Color Picker**       | Inspect any pixel and retrieve HEX, RGB, HSV, and HSL values instantly.             |
 | **Annotate**           | Draw on screenshots using pens, highlights, arrows, shapes, text, and blur effects. |
-| **Measure**            | Measure precise pixel distances using on-screen line tools. Hold **Alt** while dragging to constrain to horizontal or vertical axis.                        |
+| **Measure**            | Measure precise pixel distances using on-screen line tools. Hold **Alt** while dragging to constrain to horizontal or vertical axis.                      |
 | **Pin**                | Pin screenshots or local media as floating overlays on the screen.                  |
 | **Palette Extraction** | Extract dominant color palettes from selected regions.                              |
 | **OCR**                | Extract text from images with multilingual support and translation.                 |
@@ -50,6 +50,22 @@ When recording is active, the plugin icon shows a red pulsing dot. Clicking the 
 - Optional microphone audio recording (on/off)
 
 ---
+## 📸 Preview
+<p align="center">
+  <img src="assets/color.png" width="45%" />
+  <img src="assets/annotate.png" width="45%" />
+</p>
+
+<p align="center">
+  <img src="assets/measure.png" width="45%" />
+  <img src="assets/pin.png" width="45%" />
+</p>
+
+<p align="center">
+  <img src="assets/palette.png" width="45%" />
+  <img src="assets/ocr.png" width="45%" />
+</p>
+
 
 ## Requirements
 
@@ -68,12 +84,6 @@ When recording is active, the plugin icon shows a red pulsing dot. Clicking the 
 * `python3` + PyGObject (system file picker support)
 * `xdg-desktop-portal` (File picker for Pin Image/Video)
 
-### Color Picker
-
-* `hyprpicker` — primary picker (Hyprland / Niri compatible)
-* Zoom lens, live preview, multiple formats
-* Fallback: `slurp` + `grim`
-
 ### Optional Features
 
 * `translate-shell` — OCR translation
@@ -87,7 +97,7 @@ When recording is active, the plugin icon shows a red pulsing dot. Clicking the 
 ### Arch Linux
 
 ```bash
-sudo pacman -S grim slurp hyprpicker wl-clipboard tesseract tesseract-data-eng imagemagick zbar curl translate-shell ffmpeg jq wl-screenrec python python-gobject xdg-desktop-portal
+sudo pacman -S grim slurp wl-clipboard tesseract tesseract-data-eng imagemagick zbar curl translate-shell ffmpeg jq wl-screenrec python python-gobject xdg-desktop-portal
 yay -S gifski
 ```
 
@@ -101,7 +111,7 @@ cargo install gifski
 ### Fedora
 
 ```bash
-sudo dnf install grim slurp hyprpicker wl-clipboard tesseract tesseract-langpack-eng ImageMagick zbar curl translate-shell ffmpeg jq wl-screenrec python3 python3-gobject xdg-desktop-portal
+sudo dnf install grim slurp wl-clipboard tesseract tesseract-langpack-eng ImageMagick zbar curl translate-shell ffmpeg jq wl-screenrec python3 python3-gobject xdg-desktop-portal
 cargo install gifski
 ```
 
@@ -109,7 +119,7 @@ cargo install gifski
 
 ```nix
 environment.systemPackages = with pkgs; [
-  grim slurp hyprpicker wl-clipboard tesseract imagemagick zbar curl
+  grim slurp wl-clipboard tesseract imagemagick zbar curl
   translate-shell wl-screenrec ffmpeg gifski jq
   python3 python3Packages.pygobject xdg-desktop-portal
 ];
@@ -134,16 +144,11 @@ Screen-Toolkit/
 │
 ├── scripts/
 │   ├── annotate.sh
-│   ├── capture.sh
-|   ├── color-picker.sh
+│   ├── color-picker.sh
 │   ├── lens-upload.sh
-|   ├── measure.sh
-|   ├── mirror-record.sh
-|   ├── mirror-screenshot.sh
 │   ├── ocr.sh
-│   ├── pick-file.py
 │   ├── pick-file.sh
-│   ├── record.sh
+│   └── pick-file.py
 │   └── share-upload.sh
 ├── overlays/
 │   ├── Annotate.qml
@@ -152,13 +157,7 @@ Screen-Toolkit/
 │   ├── Measure.qml
 │   ├── Pin.qml
 │   └── RegionSelector.qml
-├── tools/
-│   ├── ColorPicker.qml
-│   ├── Lens.qml
-│   ├── Ocr.qml
-│   ├── Palette.qml
-│   └── Qr.qml
-│   
+│
 ├── widgets/
 │   ├── ResultColor.qml
 │   ├── ResultOcr.qml
@@ -208,6 +207,7 @@ All settings are configurable via the plugin settings panel.
 | Skip Recording Confirmation | Start recording immediately                     | `false`                          |
 | Copy Recording to Clipboard | Copy output after recording                     | `false`                          |
 | GIF Max Seconds            | Maximum GIF duration                            | `30`                             |
+| Search Engine URL | URL used when searching OCR text. Leave empty to use Google. Examples: `https://duckduckgo.com/?q=` or `https://search.brave.com/search?q=` | `Google (default)` |
 
 Files automatically receive appropriate extensions (`.png`, `.mp4`, `.gif`).
 
@@ -343,6 +343,4 @@ MIT License
 ## Contributing
 
 Contributions, issues, and feature requests are welcome.
-
-Repository: [https://github.com/noctalia-dev/noctalia-plugins](https://github.com/noctalia-dev/noctalia-plugins)
 
