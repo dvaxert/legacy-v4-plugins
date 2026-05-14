@@ -667,6 +667,23 @@
       "lastUpdated": "2026-03-29T19:05:12-04:00"
     },
     {
+      "id": "keep-awake-plus",
+      "name": "Keep Awake+",
+      "version": "0.3.0",
+      "official": false,
+      "author": "Noam Stolero",
+      "description": "Duration+scope Keep Awake with persistent last-choice and partial/full inhibit modes.",
+      "repository": "https://github.com/noctalia-dev/noctalia-plugins",
+      "minNoctaliaVersion": "3.6.0",
+      "license": "MIT",
+      "tags": [
+        "Bar",
+        "Panel",
+        "System"
+      ],
+      "lastUpdated": "2026-05-11T13:11:48+03:00"
+    },
+    {
       "id": "keybind-cheatsheet",
       "name": "Keybind Cheatsheet",
       "version": "3.4.0",
