@@ -88,7 +88,7 @@ Item {
           var escValue = otp.replace(/'/g, "'\\''")
           root.resetDetailMode()
           launcher.close()
-          copyProc.exec(["sh", "-c", "sleep " + typeDelay + " && printf '%s' '" + escValue + "' | wtype -d " + wtypeDelay + " -"])
+          copyProc.exec(["sh", "-c", "sleep " + typeDelay + " && printf '%s' '" + escValue + "' | wtype -d " + wtypeDelay])
         }
       }
     }
@@ -459,7 +459,6 @@ Item {
       }
     })
 
-    var passEntryRef = { "path": path, "field": null }
     results.push({
       "name": pluginApi?.tr("action.copyPassword") || "Copy Password",
       "description": pluginApi?.tr("action.copyPasswordDesc") || "Copy password to clipboard",
@@ -467,11 +466,8 @@ Item {
       "isTablerIcon": true,
       "singleLine": true,
       "onActivate": function() {
-        var e = passEntryRef
-        return function() {
-          root.copyField(e.path, null)
-        }
-      }()
+        root.copyField(path, null)
+      }
     })
 
     results.push({
@@ -481,11 +477,8 @@ Item {
       "isTablerIcon": true,
       "singleLine": true,
       "onActivate": function() {
-        var e = passEntryRef
-        return function() {
-          root.typeField(e.path, null)
-        }
-      }()
+        root.typeField(path, null)
+      }
     })
 
     var otpRef = { "path": path }
@@ -496,11 +489,8 @@ Item {
       "isTablerIcon": true,
       "singleLine": true,
       "onActivate": function() {
-        var o = otpRef
-        return function() {
-          root.copyOtp(o.path)
-        }
-      }()
+        root.copyOtp(otpRef.path)
+      }
     })
 
     results.push({
@@ -510,16 +500,12 @@ Item {
       "isTablerIcon": true,
       "singleLine": true,
       "onActivate": function() {
-        var o = otpRef
-        return function() {
-          root.typeOtp(o.path)
-        }
-      }()
+        root.typeOtp(otpRef.path)
+      }
     })
 
     for (var i = 0; i < data.fields.length; i++) {
       var field = data.fields[i]
-      var fieldRef = { "path": path, "field": field }
 
       results.push({
         "name": pluginApi?.tr("action.copyField", { "key": field.key }) || ("Copy " + field.key),
@@ -528,11 +514,8 @@ Item {
         "isTablerIcon": true,
         "singleLine": true,
         "onActivate": function() {
-          var f = fieldRef
-          return function() {
-            root.copyField(f.path, f.field)
-          }
-        }()
+          root.copyField(path, field)
+        }
       })
 
       results.push({
@@ -542,11 +525,8 @@ Item {
         "isTablerIcon": true,
         "singleLine": true,
         "onActivate": function() {
-          var f = fieldRef
-          return function() {
-            root.typeField(f.path, f.field)
-          }
-        }()
+          root.typeField(path, field)
+        }
       })
     }
 
