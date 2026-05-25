@@ -1031,6 +1031,23 @@
       "lastUpdated": "2026-04-18T21:56:28+02:00"
     },
     {
+      "id": "mullvad",
+      "name": "Mullvad VPN",
+      "version": "0.1.0",
+      "official": false,
+      "author": "OCSPG",
+      "description": "Control Mullvad VPN from the bar: connect/disconnect, pick relays, toggle lockdown mode, multihop and more.",
+      "repository": "https://github.com/noctalia-dev/noctalia-plugins",
+      "minNoctaliaVersion": "4.0.0",
+      "license": "MIT",
+      "tags": [
+        "Bar",
+        "Network",
+        "Panel"
+      ],
+      "lastUpdated": "2026-05-11T12:13:59+02:00"
+    },
+    {
       "id": "music-search",
       "name": "Music Search",
       "version": "1.2.2",
