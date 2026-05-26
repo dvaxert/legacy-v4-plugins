@@ -79,7 +79,7 @@ Item {
                 if (proto) parts.push(proto.toUpperCase());
                 return parts.join(" · ");
             }
-            return pluginApi?.tr("panel.title") + ": " + pluginApi?.tr("panel.disconnected");
+            return pluginApi?.tr("bar.disconnected-state");
         }
 
         customIconColor: Color.resolveColorKeyOptional(root.activeColor)

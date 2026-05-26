@@ -18,7 +18,6 @@
     "plugins": []
   },
   "metadata": {
-    "displayMode": "alwaysShow",
     "defaultSettings": {
       "displayMode":  "alwaysShow",
       "pollInterval": 60000,

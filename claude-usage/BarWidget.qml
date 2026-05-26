@@ -78,9 +78,9 @@ Item {
         tooltipText: {
             const parts = [];
             const pct = root.main.sessionPercent ?? -1;
-            if (pct >= 0) parts.push("Session " + Math.round(pct) + "%");
-            parts.push("$" + (root.main.todayCost ?? 0).toFixed(2) + " today");
-            parts.push("$" + (root.main.monthCost ?? 0).toFixed(2) + " this month");
+            if (pct >= 0) parts.push(pluginApi?.tr("bar.session-pct", {pct: Math.round(pct)}));
+            parts.push(pluginApi?.tr("bar.today-cost",  {cost: "$" + (root.main.todayCost  ?? 0).toFixed(2)}));
+            parts.push(pluginApi?.tr("bar.month-cost",  {cost: "$" + (root.main.monthCost  ?? 0).toFixed(2)}));
             return parts.join(" · ");
         }
 

@@ -17,8 +17,6 @@
     "plugins": []
   },
   "metadata": {
-    "displayMode": "alwaysShow",
-    "iconColor": "none",
     "defaultSettings": {
       "displayMode": "alwaysShow",
       "connectedColor": "primary",

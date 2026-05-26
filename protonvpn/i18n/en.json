@@ -2,6 +2,9 @@
   "settings": {
     "pluginSettings": "Plugin settings"
   },
+  "bar": {
+    "disconnected-state": "ProtonVPN: Disconnected"
+  },
   "panel": {
     "title": "ProtonVPN",
     "refresh": "Refresh",

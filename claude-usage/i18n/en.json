@@ -8,7 +8,20 @@
     "pollInterval": "Refresh interval",
     "pollIntervalDesc": "How often to re-read usage data",
     "dailyBudget": "Daily budget ($)",
-    "dailyBudgetDesc": "Pill colour ramp activates above 50%. Set to 0 to disable."
+    "dailyBudgetDesc": "Pill colour ramp activates above 50%. Set to 0 to disable.",
+    "barMetric-auto": "Auto (session % or cost)",
+    "barMetric-session": "Session %",
+    "barMetric-weekly": "Weekly %",
+    "barMetric-cost": "Cost ($)",
+    "poll-30s": "30 seconds",
+    "poll-1m": "1 minute",
+    "poll-5m": "5 minutes",
+    "poll-15m": "15 minutes"
+  },
+  "bar": {
+    "session-pct": "Session {pct}%",
+    "today-cost": "{cost} today",
+    "month-cost": "{cost} this month"
   },
   "panel": {
     "title": "Claude Code",
@@ -26,6 +39,10 @@
     "this-month": "This month",
     "tokens": "tokens",
     "sessions": "sessions",
-    "all-time": "All time"
+    "all-time": "All time",
+    "today-summary": "Today: {cost}  ·  {tokens} tokens",
+    "month-summary": "This month: {cost}  ·  {sessions} sessions",
+    "all-summary": "All time: {cost}",
+    "extra-summary": "{used} used  ·  {limit} limit"
   }
 }

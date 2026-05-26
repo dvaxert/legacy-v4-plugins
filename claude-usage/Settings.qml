@@ -19,10 +19,10 @@ ColumnLayout {
         label: pluginApi?.tr("settings.barMetric")
         description: pluginApi?.tr("settings.barMetricDesc")
         model: [
-            { key: "auto",    name: "Auto (session % or cost)" },
-            { key: "session", name: "Session %"                },
-            { key: "weekly",  name: "Weekly %"                 },
-            { key: "cost",    name: "Cost ($)"                 }
+            { key: "auto",    name: pluginApi?.tr("settings.barMetric-auto")    },
+            { key: "session", name: pluginApi?.tr("settings.barMetric-session") },
+            { key: "weekly",  name: pluginApi?.tr("settings.barMetric-weekly")  },
+            { key: "cost",    name: pluginApi?.tr("settings.barMetric-cost")    }
         ]
         currentKey: ps.barMetric ?? "auto"
     }
@@ -43,10 +43,10 @@ ColumnLayout {
         label: pluginApi?.tr("settings.pollInterval")
         description: pluginApi?.tr("settings.pollIntervalDesc")
         model: [
-            { key: "30000",  name: "30 seconds" },
-            { key: "60000",  name: "1 minute"   },
-            { key: "300000", name: "5 minutes"  },
-            { key: "900000", name: "15 minutes" }
+            { key: "30000",  name: pluginApi?.tr("settings.poll-30s") },
+            { key: "60000",  name: pluginApi?.tr("settings.poll-1m")  },
+            { key: "300000", name: pluginApi?.tr("settings.poll-5m")  },
+            { key: "900000", name: pluginApi?.tr("settings.poll-15m") }
         ]
         currentKey: String(ps.pollInterval ?? 60000)
     }

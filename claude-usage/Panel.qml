@@ -81,14 +81,14 @@ Item {
 
                     NIconButton {
                         icon: "refresh"
-                        tooltipText: "Refresh"
+                        tooltipText: pluginApi?.tr("panel.refresh")
                         baseSize: Style.baseWidgetSize * 0.8
                         onClicked: main?.refresh()
                     }
 
                     NIconButton {
                         icon: "close"
-                        tooltipText: "Close"
+                        tooltipText: pluginApi?.tr("panel.close")
                         baseSize: Style.baseWidgetSize * 0.8
                         onClicked: pluginApi.closePanel(pluginApi.panelOpenScreen)
                     }
@@ -273,8 +273,7 @@ Item {
                             Layout.fillWidth: true
 
                             NLabel {
-                                label: root.fmtCost(main?.extraUsed ?? 0) + " " + pluginApi?.tr("panel.used") +
-                                       "  ·  " + root.fmtCost(main?.extraLimit ?? 0) + " " + pluginApi?.tr("panel.limit")
+                                label: pluginApi?.tr("panel.extra-summary", {used: root.fmtCost(main?.extraUsed ?? 0), limit: root.fmtCost(main?.extraLimit ?? 0)})
                                 labelColor: Color.mOnSurfaceVariant
                                 Layout.fillWidth: true
                             }
@@ -354,21 +353,19 @@ Item {
                     }
 
                     NLabel {
-                        label: pluginApi?.tr("panel.today") + ": " + root.fmtCost(main?.todayCost ?? 0) +
-                               "  ·  " + root.fmtTokens((main?.todayInputTokens ?? 0) + (main?.todayOutputTokens ?? 0)) + " " + pluginApi?.tr("panel.tokens")
+                        label: pluginApi?.tr("panel.today-summary", {cost: root.fmtCost(main?.todayCost ?? 0), tokens: root.fmtTokens((main?.todayInputTokens ?? 0) + (main?.todayOutputTokens ?? 0))})
                         labelColor: Color.mOnSurfaceVariant
                         Layout.fillWidth: true
                     }
 
                     NLabel {
-                        label: pluginApi?.tr("panel.this-month") + ": " + root.fmtCost(main?.monthCost ?? 0) +
-                               "  ·  " + (main?.monthSessions ?? 0) + " " + pluginApi?.tr("panel.sessions")
+                        label: pluginApi?.tr("panel.month-summary", {cost: root.fmtCost(main?.monthCost ?? 0), sessions: main?.monthSessions ?? 0})
                         labelColor: Color.mOnSurfaceVariant
                         Layout.fillWidth: true
                     }
 
                     NLabel {
-                        label: pluginApi?.tr("panel.all-time") + ": " + root.fmtCost(main?.allCost ?? 0)
+                        label: pluginApi?.tr("panel.all-summary", {cost: root.fmtCost(main?.allCost ?? 0)})
                         labelColor: Color.mOnSurfaceVariant
                         Layout.fillWidth: true
                     }
