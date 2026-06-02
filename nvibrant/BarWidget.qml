@@ -21,7 +21,7 @@ Item {
 
   readonly property bool vibrantEnabled: cfg.enabled ?? defaults.enabled ?? false
   readonly property int vibranceValue: cfg.vibranceValue ?? defaults.vibranceValue ?? 512
-  readonly property int displayCount: cfg.displayCount ?? defaults.displayCount ?? 1
+  readonly property int displayIndex: (cfg.displayIndex ?? defaults.displayIndex ?? 1) - 1
 
   readonly property real contentWidth: Style.capsuleHeight
   readonly property real contentHeight: Style.capsuleHeight
@@ -29,10 +29,35 @@ Item {
   implicitWidth: contentWidth
   implicitHeight: contentHeight
 
+  Process {
+    id: nvibrantProcess
+    stdout: StdioCollector {}
+    stderr: StdioCollector {}
+    onExited: (code) => Logger.i("NVibrant", "exited: " + code)
+  }
+
+  function buildCmd(value) {
+    var args = ["/usr/sbin/nvibrant"]
+    for (var i = 0; i < root.displayIndex; i++)
+      args.push("0")
+    args.push(value.toString())
+    return args
+  }
+
+  function applyVibrance(value) {
+    var cmd = buildCmd(value)
+    Logger.i("NVibrant", "BarWidget running: " + cmd.join(" "))
+    nvibrantProcess.running = false
+    nvibrantProcess.command = cmd
+    Qt.callLater(function() { nvibrantProcess.running = true })
+  }
+
   function toggle() {
     if (pluginApi) {
-      pluginApi.pluginSettings.enabled = !vibrantEnabled
+      var newEnabled = !vibrantEnabled
+      pluginApi.pluginSettings.enabled = newEnabled
       pluginApi.saveSettings()
+      applyVibrance(newEnabled ? vibranceValue : 0)
     }
   }
 
@@ -61,8 +86,8 @@ Item {
     id: contextMenu
     model: [
       {
-        "label": root.vibrantEnabled 
-          ? pluginApi?.tr("panel.disable-vibrance") 
+        "label": root.vibrantEnabled
+          ? pluginApi?.tr("panel.disable-vibrance")
           : pluginApi?.tr("panel.enable-vibrance"),
         "action": "toggle",
         "icon": root.vibrantEnabled ? "eye-off" : "eye"
