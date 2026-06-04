@@ -2,7 +2,7 @@ import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls
 import Quickshell
-import Quickshell.Io as QSIo
+import Quickshell.Io
 import qs.Commons
 import qs.Widgets
 import qs.Services.UI
@@ -53,7 +53,7 @@ Item {
     }
 
     // Hardware fan monitoring (passive tracking bound to thinkfan)
-    QSIo.FileView {
+    FileView {
         id: fanLoader
         path: "/proc/acpi/ibm/fan"
         printErrors: false
@@ -82,7 +82,7 @@ Item {
     }
 
     // System temperature monitoring
-    QSIo.FileView {
+    FileView {
         id: tempLoader
         path: "/sys/class/thermal/thermal_zone0/temp"
         printErrors: false
