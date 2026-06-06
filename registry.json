@@ -947,7 +947,7 @@
     {
       "id": "mirror-mirror",
       "name": "Mirror Mirror",
-      "version": "0.1.3",
+      "version": "0.1.4",
       "official": false,
       "author": "Mathew-D",
       "description": "Mirror one monitor to another using wl-mirror.",
@@ -960,7 +960,7 @@
         "Utility",
         "System"
       ],
-      "lastUpdated": "2026-04-27T17:12:06-04:00"
+      "lastUpdated": "2026-06-06T11:14:18+02:00"
     },
     {
       "id": "model-usage",
