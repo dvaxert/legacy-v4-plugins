@@ -89,6 +89,21 @@ Item {
         pluginApi?.manifest?.metadata?.defaultSettings?.showBalancedIcon ??
         false
 
+    function getBatteryIcon() {
+        if (root.batStatus === pluginApi.tr("battery.status-charging")) {
+            return "battery-charging";
+        }
+        if (root.batStatus === pluginApi.tr("battery.status-full")) {
+            return "battery-charging-2";
+        }
+        
+        if (root.batPercent >= 86) return "battery-4";
+        if (root.batPercent >= 56) return "battery-3";
+        if (root.batPercent >= 31) return "battery-2";
+        if (root.batPercent >= 11) return "battery-1";
+        return "battery";
+    }
+
     // ===== Helpers =====
 
     function parseEta(out) {
@@ -279,7 +294,7 @@ Item {
             spacing: Style.marginS
 
             NIcon {
-                icon: (root.batStatus === pluginApi.tr("battery.status-charging") || root.batStatus === pluginApi.tr("battery.status-full")) ? "battery-charging" : "battery-4"
+                icon: root.getBatteryIcon()
                 color: root.profileForegroundColor
             }
 
